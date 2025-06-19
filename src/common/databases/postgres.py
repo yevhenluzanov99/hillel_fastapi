@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 Base = declarative_base()
 
-class Database():
+class Database:
     def __init__(self):
         self.__session = None
         self.__engine: Optional[AsyncEngine] = None
@@ -36,3 +36,7 @@ class Database():
 
 
 postgres = Database()
+
+async def get_session():
+    async for session in postgres.get_db():
+        yield session

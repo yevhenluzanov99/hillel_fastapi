@@ -1,25 +1,41 @@
 from contextlib import asynccontextmanager
 
+import uvicorn
 from fastapi import FastAPI
 
 from src.base_settings import base_settings
 from src.common.databases.postgres import postgres
-
+from general.views import router as status_router
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    postgres.connect(base_settings.postgres.url)
+async def lifespan(application: FastAPI):
+    # postgres.connect(base_settings.postgres.url)
+    include_routers(application)
     yield
-    await postgres.disconnect()
+    # await postgres.disconnect()
+
+
+def include_routers(application: FastAPI) -> None:
+    application.include_router(router=status_router)
 
 
 def get_application():
     application = FastAPI(
         debug=True,
         lifespan=lifespan,
+        docs_url="/docs",
+        redoc_url="/redoc",
+        openapi_url="/openapi.json"
     )
     return application
 
 
 app = get_application()
 
+if __name__ == "__main__":
+    uvicorn.run(
+        app=app,
+        host="localhost",
+        port=5000,
+        # reload=True,
+    )
