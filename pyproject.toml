@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "fastapi-hillel"
+version = "0.1.0"
+description = ""
+authors = ["umterrick <usichenko.vlad67@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.12"
+pydantic-settings = "^2.9.1"
+sqlalchemy = "^2.0.41"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
