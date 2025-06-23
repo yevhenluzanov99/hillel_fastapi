@@ -4,6 +4,7 @@ from fastapi import APIRouter, status, Depends, Response
 
 from src.catalogue.models.pydantic import ProductModel
 from src.catalogue.services import get_product_service
+from src.common.exceptions.base import ObjectDoesNotExistException
 from src.common.schemas.common import ErrorResponse
 
 product_router = APIRouter(prefix="/products")
@@ -44,8 +45,8 @@ async def get_product_details(
     :return: Response with list of ProductModels
     """
     try:
-        response = await service.details(pk)
-    except ValueError as exc:
+        response = await service.detail(pk=pk)
+    except ObjectDoesNotExistException as exc:
         response.status_code = status.HTTP_404_NOT_FOUND
         return ErrorResponse(message=exc.message)
 

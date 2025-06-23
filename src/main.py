@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from src.base_settings import base_settings
 from src.common.databases.postgres import postgres
 from general.views import router as status_router
+from src.catalogue.views import product_router
 
 @asynccontextmanager
 async def lifespan(application: FastAPI):
@@ -17,7 +18,11 @@ async def lifespan(application: FastAPI):
 
 def include_routers(application: FastAPI) -> None:
     application.include_router(router=status_router)
-
+    application.include_router(
+        router=product_router,
+        prefix="/catalogue",
+        tags=['Catalogue'],
+    )
 
 def get_application():
     application = FastAPI(

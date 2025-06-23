@@ -2,7 +2,7 @@ from abc import ABC
 from typing import TypeVar, Generic
 from pydantic import BaseModel
 
-from src.common.repository.sqlalchemy_repo import BaseSqlAlchemyRepository
+from src.common.repository.sqlalchemy import BaseSqlAlchemyRepository
 
 T = TypeVar("T")
 PType = TypeVar("PType", bound=BaseModel)
